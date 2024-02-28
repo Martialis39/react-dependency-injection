@@ -42,8 +42,17 @@ export const counterSlice = createAppSlice({
     // will call the thunk with the `dispatch` function as the first argument. Async
     // code can then be executed and other actions can be dispatched. Thunks are
     // typically used to make async requests.
-    incrementAsync: create.asyncThunk(
-      async ({ countApi, amount }) => {
+    incrementAsync: create.asyncThunk<
+      number,
+      number,
+      {
+        extra: {
+          countApi: ICountApi
+        }
+      }
+    >(
+      async (amount, { extra }) => {
+        const countApi: ICountApi = extra.countApi
         const response = await countApi.fetchCount(amount)
         // The value we return becomes the `fulfilled` action payload
         return response

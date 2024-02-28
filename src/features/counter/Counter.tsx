@@ -21,8 +21,6 @@ export const Counter = () => {
 
   const incrementValue = Number(incrementAmount) || 0
 
-  const countApi = useApi()
-
   return (
     <div>
       <div className={styles.row}>
@@ -63,9 +61,7 @@ export const Counter = () => {
         <button
           className={styles.asyncButton}
           disabled={status !== "idle"}
-          onClick={() =>
-            dispatch(incrementAsync({ countApi, amount: incrementValue }))
-          }
+          onClick={() => dispatch(incrementAsync(incrementValue))}
         >
           Add Async
         </button>
