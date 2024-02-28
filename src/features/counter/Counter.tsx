@@ -11,6 +11,7 @@ import {
   selectCount,
   selectStatus,
 } from "./counterSlice"
+import { useApi } from "../../hooks/useApi"
 
 export const Counter = () => {
   const dispatch = useAppDispatch()
@@ -19,6 +20,8 @@ export const Counter = () => {
   const [incrementAmount, setIncrementAmount] = useState("2")
 
   const incrementValue = Number(incrementAmount) || 0
+
+  const countApi = useApi()
 
   return (
     <div>
@@ -60,7 +63,9 @@ export const Counter = () => {
         <button
           className={styles.asyncButton}
           disabled={status !== "idle"}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
+          onClick={() =>
+            dispatch(incrementAsync({ countApi, amount: incrementValue }))
+          }
         >
           Add Async
         </button>

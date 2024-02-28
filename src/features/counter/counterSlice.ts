@@ -2,6 +2,7 @@ import type { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
 import type { AppThunk } from "../../app/store"
 import { fetchCount } from "./counterAPI"
+import { ICountApi } from "../../api/types"
 
 export interface CounterSliceState {
   value: number
@@ -42,10 +43,10 @@ export const counterSlice = createAppSlice({
     // code can then be executed and other actions can be dispatched. Thunks are
     // typically used to make async requests.
     incrementAsync: create.asyncThunk(
-      async (amount: number) => {
-        const response = await fetchCount(amount)
+      async ({ countApi, amount }) => {
+        const response = await countApi.fetchCount(amount)
         // The value we return becomes the `fulfilled` action payload
-        return response.data
+        return response
       },
       {
         pending: state => {
